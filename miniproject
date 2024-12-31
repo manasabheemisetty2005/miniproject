@@ -1,0 +1,85 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_SEATS 10
+
+void displaySeats(int seats[]) {
+    printf("\nSeat Availability:\n");
+    for (int i = 0; i < MAX_SEATS; i++) {
+        if (seats[i] == 0) {
+            printf("Seat %d: Available\n", i + 1);
+        } else {
+            printf("Seat %d: Booked\n", i + 1);
+        }
+    }
+}
+
+void bookSeat(int seats[]) {
+    int seatNumber;
+    printf("Enter seat number to book (1-%d): ", MAX_SEATS);
+    scanf("%d", &seatNumber);
+
+    if (seatNumber < 1 || seatNumber > MAX_SEATS) {
+        printf("Invalid seat number!\n");
+    } else if (seats[seatNumber - 1] == 1) {
+        printf("Seat %d is already booked!\n", seatNumber);
+    } else {
+        seats[seatNumber - 1] = 1;
+        printf("Seat %d booked successfully!\n", seatNumber);
+        generateTicket(seatNumber);
+    }
+}
+
+void cancelSeat(int seats[]) {
+    int seatNumber;
+    printf("Enter seat number to cancel (1-%d): ", MAX_SEATS);
+    scanf("%d", &seatNumber);
+
+    if (seatNumber < 1 || seatNumber > MAX_SEATS) {
+        printf("Invalid seat number!\n");
+    } else if (seats[seatNumber - 1] == 0) {
+        printf("Seat %d is not booked!\n", seatNumber);
+    } else {
+        seats[seatNumber - 1] = 0;
+        printf("Seat %d cancelled successfully!\n", seatNumber);
+    }
+}
+
+void generateTicket(int seatNumber) {
+    printf("Generating ticket for seat %d...\n", seatNumber);
+    // Here you could add more ticket details like passenger name, date, etc.
+}
+
+int main() {
+    int seats[MAX_SEATS] = {0}; // 0 indicates available, 1 indicates booked
+    int choice;
+
+    while (1) {
+        printf("\nBus Reservation System\n");
+        printf("1. Display Seats\n");
+        printf("2. Book a Seat\n");
+        printf("3. Cancel a Seat\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                displaySeats(seats);
+                break;
+            case 2:
+                bookSeat(seats);
+                break;
+            case 3:
+                cancelSeat(seats);
+                break;
+            case 4:
+                printf("Exiting...\n");
+                exit(0);
+            default:
+                printf("Invalid choice! Please try again.\n");
+        }
+    }
+
+    return 0;
+}
